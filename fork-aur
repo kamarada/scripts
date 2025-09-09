@@ -1,0 +1,25 @@
+#!/bin/bash
+# This script forks an AUR package to a GitHub repo
+
+# Create an empty GitHub repo before running this script:
+# https://github.com/organizations/kamarada/repositories/new
+
+REMOTE_UPSTREAM="https://aur.archlinux.org/$1.git"
+REMOTE_FORK="git@github.com:kamarada/$1.git"
+
+git clone $REMOTE_UPSTREAM
+cd $1
+
+git remote rename origin aur
+git remote add origin $REMOTE_FORK
+
+git branch -m stable
+git branch --unset-upstream
+git push origin -u stable
+# Let's create the stable branch first so it becomes the default branch
+
+git checkout -b aur
+git push origin -u aur
+
+git checkout -b testing
+git push origin -u testing
