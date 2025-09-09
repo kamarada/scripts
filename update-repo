@@ -7,12 +7,20 @@ BRANCH="testing"
 REPO="kamarada"
 ARCH="x86_64"
 
+# Move recently built packages to the repo
 cd $GIT_DIR
 mv *.tar.zst "$REPO_DIR/$BRANCH/$REPO/$ARCH"
 
+# Update package database
 cd "$REPO_DIR/$BRANCH/$REPO/$ARCH"
 repo-add "$REPO.db.tar.gz" *.pkg.tar.*
 
+# Update directory listing
+cd $REPO_DIR
+find . -name 'index.html' -delete
+html-tree
+
+# Upload changes
 cd $REPO_DIR
 git add .
 git commit -m 'Uploading repo'
