@@ -1,0 +1,19 @@
+#!/bin/bash
+# This script adds packages to the repo, updates its database and uploads changes
+
+GIT_DIR="/home/vinicius/dev/projects/git/kamarada"
+REPO_DIR="$GIT_DIR/repo"
+BRANCH="testing"
+REPO="kamarada"
+ARCH="x86_64"
+
+cd $GIT_DIR
+mv *.tar.zst "$REPO_DIR/$BRANCH/$REPO/$ARCH"
+
+cd "$REPO_DIR/$BRANCH/$REPO/$ARCH"
+repo-add "$REPO.db.tar.gz" *.pkg.tar.*
+
+cd $REPO_DIR
+git add .
+git commit -m 'Uploading repo'
+git push
