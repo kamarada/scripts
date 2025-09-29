@@ -1,0 +1,31 @@
+#!/bin/bash
+# This script forks a Manjaro repo to a Kamarada repo
+
+# Example:
+# fork-manjaro https://gitlab.manjaro.org/plymouth-themes/plymouth-manjaro.git plymouth-kamarada
+
+# Create an empty GitHub repo before running this script:
+# https://github.com/organizations/kamarada/repositories/new
+
+REMOTE_UPSTREAM=$1
+REPO_NAME=$2
+REMOTE_FORK="git@github.com:kamarada/$REPO_NAME.git"
+
+git clone "$REMOTE_UPSTREAM" "$REPO_NAME"
+cd "$REPO_NAME"
+
+git remote rename origin manjaro
+git remote add origin "$REMOTE_FORK"
+
+git branch -m stable
+git branch --unset-upstream
+git push origin -u stable
+# Let's create the stable branch first so it becomes the default branch
+
+git checkout -b manjaro
+git push origin -u manjaro
+
+git checkout -b testing
+git push origin -u testing
+
+git fetch manjaro

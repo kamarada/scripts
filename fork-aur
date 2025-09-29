@@ -23,3 +23,5 @@ git push origin -u aur
 
 git checkout -b testing
 git push origin -u testing
+
+git fetch aur
