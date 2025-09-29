@@ -3,10 +3,6 @@
         "aur": "https://aur.archlinux.org/orchis-theme-git.git",
         "kamarada": "git@github.com:kamarada/orchis-theme-git.git"
     },
-    "plymouth-kamarada": {
-        "manjaro": "https://gitlab.manjaro.org/plymouth-themes/plymouth-manjaro.git",
-        "kamarada": "git@github.com:kamarada/plymouth-kamarada.git"
-    },
     "plymouth-theme-kamarada": {
         "manjaro": "https://gitlab.manjaro.org/packages/extra/plymouth-theme-manjaro.git",
         "kamarada": "git@github.com:kamarada/plymouth-theme-kamarada.git"
