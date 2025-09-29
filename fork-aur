@@ -4,14 +4,15 @@
 # Create an empty GitHub repo before running this script:
 # https://github.com/organizations/kamarada/repositories/new
 
-REMOTE_UPSTREAM="https://aur.archlinux.org/$1.git"
-REMOTE_FORK="git@github.com:kamarada/$1.git"
+REPO_NAME=$1
+REMOTE_UPSTREAM="https://aur.archlinux.org/$REPO_NAME.git"
+REMOTE_FORK="git@github.com:kamarada/$REPO_NAME.git"
 
-git clone $REMOTE_UPSTREAM
-cd $1
+git clone "$REMOTE_UPSTREAM" "$REPO_NAME"
+cd "$REPO_NAME"
 
 git remote rename origin aur
-git remote add origin $REMOTE_FORK
+git remote add origin "$REMOTE_FORK"
 
 git branch -m stable
 git branch --unset-upstream
@@ -25,3 +26,12 @@ git checkout -b testing
 git push origin -u testing
 
 git fetch aur
+
+echo
+echo 'Finished! Remember to add to repos-config.json:'
+echo ''
+echo "    \"$REPO_NAME\": {"
+echo "        \"aur\": \"$REMOTE_UPSTREAM\","
+echo "        \"kamarada\": \"$REMOTE_FORK\""
+echo '    },'
+echo

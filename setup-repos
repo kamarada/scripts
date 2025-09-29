@@ -1,0 +1,42 @@
+#!/bin/bash
+# This script replicates the Linux Kamarada repository structure
+
+REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
+REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
+CHECKOUT_BRANCH="testing"
+
+call_jq() {
+    jq "$@" $REPOS_CONFIG
+}
+
+cd "$REPOS_DIR"
+
+NUMBER_OF_REPOS=$(call_jq '. | length')
+
+for ((r = 0; r < NUMBER_OF_REPOS; r++ ))
+do
+    REPO_NAME=$(call_jq -r "keys | .[$r]")
+    if [ -d "$REPOS_DIR/$REPO_NAME" ]; then
+        echo "$REPO_NAME: skipping, directory exists"
+    else
+        KAMARADA_REMOTE=$(call_jq -r ".\"$REPO_NAME\" | .\"kamarada\"")
+        git clone "$KAMARADA_REMOTE" "$REPO_NAME"
+        cd "$REPO_NAME"
+        git checkout "$CHECKOUT_BRANCH"
+
+        # Set up upstream remote
+        MANJARO_REMOTE=$(call_jq -r ".\"$REPO_NAME\" | .\"manjaro\"")
+        AUR_REMOTE=$(call_jq -r ".\"$REPO_NAME\" | .\"aur\"")
+        if [[ "$MANJARO_REMOTE" != "null" ]]; then
+            git remote add manjaro "$MANJARO_REMOTE"
+            git fetch manjaro
+            echo "$REPO_NAME: set up with Manjaro remote $MANJARO_REMOTE"
+        elif [[ "$AUR_REMOTE" != "null" ]]; then
+            git remote add aur "$AUR_REMOTE"
+            git fetch aur
+            echo "$REPO_NAME: set up with AUR remote $MANJARO_REMOTE"
+        fi
+
+        cd ..
+    fi
+done
