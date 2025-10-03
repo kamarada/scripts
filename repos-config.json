@@ -23,6 +23,14 @@
         "aur": "https://aur.archlinux.org/gnome-shell-extension-lockkeys.git",
         "kamarada": "git@github.com:kamarada/gnome-shell-extension-lockkeys.git"
     },
+    "grub-theme-kamarada": {
+        "manjaro": "https://gitlab.manjaro.org/packages/extra/grub-theme-live.git",
+        "kamarada": "git@github.com:kamarada/grub-theme-kamarada.git"
+    },
+    "grub-theme-kamarada-src": {
+        "manjaro": "https://gitlab.manjaro.org/artwork/branding/grub-theme.git",
+        "kamarada": "git@github.com:kamarada/grub-theme-kamarada-src.git"
+    },
     "hfsprogs": {
         "aur": "https://aur.archlinux.org/hfsprogs.git",
         "kamarada": "git@github.com:kamarada/hfsprogs.git"
