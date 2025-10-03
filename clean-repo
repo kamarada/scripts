@@ -1,0 +1,45 @@
+#!/bin/bash
+# This script deletes old versions of packages, it can keep some versions
+
+GIT_DIR="/home/vinicius/dev/projects/git/kamarada"
+REPO_DIR="$GIT_DIR/repo"
+BRANCH="testing"
+REPO="kamarada"
+ARCH="x86_64"
+
+VERSIONS_TO_KEEP=1
+
+cd "$REPO_DIR/$BRANCH/$REPO/$ARCH"
+
+previous_name=''
+repeated_packages=1
+
+find * -type f -name '*.pkg.tar.zst' | sort -r | while IFS= read -r filename; do
+    before_extension=${filename%%".pkg.tar.zst"}
+    arch=${before_extension##*-}
+    before_arch=${before_extension%%"-$arch"}
+    release=${before_arch##*-}
+    before_release=${before_arch%%"-$release"}
+    package_name=${before_release%-*}
+    version=${before_release##*-}
+
+    #echo "$package_name"
+    #echo "$version"
+    #echo "$release"
+    #echo "$arch"
+
+    if [ "$package_name" != "$previous_name" ]; then
+        previous_name="$package_name"
+        repeated_packages=1
+        echo "KEEP $filename"
+    else
+        ((repeated_packages++))
+        if [ $repeated_packages -gt $VERSIONS_TO_KEEP ]; then
+            echo "DELETE $filename"
+            rm "$filename"
+        else
+            echo "KEEP $filename"
+        fi
+    fi
+
+done

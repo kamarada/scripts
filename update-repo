@@ -11,8 +11,12 @@ ARCH="x86_64"
 cd $GIT_DIR
 mv *.tar.zst "$REPO_DIR/$BRANCH/$REPO/$ARCH"
 
-# Update package database
+# Remove old packages and database
 cd "$REPO_DIR/$BRANCH/$REPO/$ARCH"
+clean-repo
+rm "$REPO.{db,files}*"
+
+# Create a new package database
 repo-add "$REPO.db.tar.gz" *.pkg.tar.*
 
 # Update directory listing
