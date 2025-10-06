@@ -7,9 +7,9 @@
         "aur": "https://aur.archlinux.org/ca-certificates-icp_br.git",
         "kamarada": "git@github.com:kamarada/ca-certificates-icp_br.git"
     },
-    "calamares": {
+    "calamares-kamarada": {
         "manjaro": "https://gitlab.manjaro.org/packages/extra/calamares.git",
-        "kamarada": "git@github.com:kamarada/calamares.git"
+        "kamarada": "git@github.com:kamarada/calamares-kamarada.git"
     },
     "calamares-src": {
         "manjaro": "https://gitlab.manjaro.org/applications/calamares.git",
