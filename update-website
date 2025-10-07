@@ -2,8 +2,7 @@
 
 set -ex
 
-VERSION='15.6'
-VERSION_WITHOUT_DOT='156'
+VERSION='manjaro'
 LOCAL_FOLDER="/home/vinicius/dev/projects/sf/kamarada/$VERSION/"
 REMOTE_LINK="https://sourceforge.net/projects/kamarada/files/$VERSION/"
 LOCAL_WEBSITE='/home/vinicius/dev/projects/git/kamarada/kamarada-website-master/'
@@ -57,6 +56,5 @@ CHECKSUM=${CHECKSUM%% *}
 
 CHECKSUM_NAME=$(find * -name "*.iso.sha256")
 
-LANG=en update_website $ISO_NAME $ISO_SIZE $CHECKSUM $CHECKSUM_NAME "en" > "${LOCAL_WEBSITE}_data/download$VERSION_WITHOUT_DOT.yml"
-LANG=pt update_website $ISO_NAME $ISO_SIZE $CHECKSUM $CHECKSUM_NAME "pt" >> "${LOCAL_WEBSITE}_data/download$VERSION_WITHOUT_DOT.yml"
-
+LANG=en update_website $ISO_NAME $ISO_SIZE $CHECKSUM $CHECKSUM_NAME "en" > "${LOCAL_WEBSITE}_data/download-$VERSION.yml"
+LANG=pt update_website $ISO_NAME $ISO_SIZE $CHECKSUM $CHECKSUM_NAME "pt" >> "${LOCAL_WEBSITE}_data/download-$VERSION.yml"
