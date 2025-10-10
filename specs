@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Run this script inside the live media
+LOCAL_FOLDER="/home/vinicius/dev/projects/sf/kamarada/manjaro/"
+PKGS_FILE=$(find "$LOCAL_FOLDER" -name "*.pkgs")
 
 # List installed packages
-INSTALLED_PACKAGES=$(pacman -Qr /)
+#INSTALLED_PACKAGES=$(pacman -Qr /)
 
 read -r -d '' PACKAGES_OF_INTEREST << EOF
 linux-meta
@@ -40,5 +41,5 @@ EOF
 # For each installed package
 for PACKAGE in $PACKAGES_OF_INTEREST
 do
-    grep "^$PACKAGE " <<< $INSTALLED_PACKAGES
+    grep "^$PACKAGE " "$PKGS_FILE"
 done
