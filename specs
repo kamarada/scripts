@@ -3,15 +3,16 @@
 # Run this script inside the live media
 
 # List installed packages
-INSTALLED_PACKAGES=$(rpm -qa --qf '%{name}|%{version}\n' | sort)
+INSTALLED_PACKAGES=$(pacman -Qr /)
 
 read -r -d '' PACKAGES_OF_INTEREST << EOF
-kernel-default
-xorg-x11-server
-libwayland-server0
+linux-meta
+linux616
+xorg-server
+wayland
 gnome-shell
-libreoffice
-MozillaFirefox
+libreoffice-still
+firefox
 chromium
 vlc
 evolution
@@ -21,24 +22,23 @@ drawing
 firewalld
 gparted
 hplip
-java-21-openjdk
+jdk21-openjdk
 keepassxc
-linphone
-pdfsam-basic
+linphone-desktop
+pdfsam
 pidgin
-python3
-python311
+python
 samba
 tor
-transmission
+transmission-gtk
 vim
 wine
-calamares
+calamares-kamarada
 flatpak
 EOF
 
 # For each installed package
 for PACKAGE in $PACKAGES_OF_INTEREST
 do
-    grep "^$PACKAGE[|]" <<< $INSTALLED_PACKAGES
+    grep "^$PACKAGE " <<< $INSTALLED_PACKAGES
 done
