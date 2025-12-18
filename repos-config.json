@@ -15,6 +15,10 @@
         "manjaro": "https://gitlab.manjaro.org/applications/calamares.git",
         "kamarada": "git@github.com:kamarada/calamares-src.git"
     },
+    "globalprotect-openconnect": {
+        "archlinux": "https://gitlab.archlinux.org/archlinux/packaging/packages/globalprotect-openconnect.git",
+        "kamarada": "git@github.com:kamarada/globalprotect-openconnect.git"
+    },
     "gnome-kiosk": {
         "aur": "https://aur.archlinux.org/gnome-kiosk.git",
         "kamarada": "git@github.com:kamarada/gnome-kiosk.git"
