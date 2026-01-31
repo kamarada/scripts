@@ -5,8 +5,12 @@ REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
 REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
 CHECKOUT_BRANCH="testing"
 
+# Define color variables (using \033 for maximum portability)
+GREEN='\033[32m'
+RESET='\033[0m'
+
 call_jq() {
-    jq "$@" $REPOS_CONFIG
+    jq -r "$@" $REPOS_CONFIG
 }
 
 cd "$REPOS_DIR"
@@ -15,26 +19,27 @@ NUMBER_OF_REPOS=$(call_jq '. | length')
 
 for ((r = 0; r < NUMBER_OF_REPOS; r++ ))
 do
-    REPO_NAME=$(call_jq -r "keys | .[$r]")
+    REPO_NAME=$(call_jq -r ".[$r].folder")
     if [ -d "$REPOS_DIR/$REPO_NAME" ]; then
-        echo "$REPO_NAME: skipping, directory exists"
+        printf "${GREEN}$REPO_NAME: directory exists, skipping...${RESET}\n"
     else
-        KAMARADA_REMOTE=$(call_jq -r ".\"$REPO_NAME\" | .\"kamarada\"")
+        printf "${GREEN}$REPO_NAME: directory does not exist, fetching...${RESET}\n"
+        KAMARADA_REMOTE=$(call_jq -r ".[$r].kamarada")
         git clone "$KAMARADA_REMOTE" "$REPO_NAME"
         cd "$REPO_NAME"
         git checkout "$CHECKOUT_BRANCH"
 
         # Set up upstream remote
-        MANJARO_REMOTE=$(call_jq -r ".\"$REPO_NAME\" | .\"manjaro\"")
-        AUR_REMOTE=$(call_jq -r ".\"$REPO_NAME\" | .\"aur\"")
+        MANJARO_REMOTE=$(call_jq -r ".[$r].manjaro")
+        AUR_REMOTE=$(call_jq -r ".[$r].aur")
         if [[ "$MANJARO_REMOTE" != "null" ]]; then
             git remote add manjaro "$MANJARO_REMOTE"
             git fetch manjaro
-            echo "$REPO_NAME: set up with Manjaro remote $MANJARO_REMOTE"
+            printf "${GREEN}$REPO_NAME: set up with Manjaro remote $MANJARO_REMOTE${RESET}\n"
         elif [[ "$AUR_REMOTE" != "null" ]]; then
             git remote add aur "$AUR_REMOTE"
             git fetch aur
-            echo "$REPO_NAME: set up with AUR remote $MANJARO_REMOTE"
+            printf "${GREEN}$REPO_NAME: set up with AUR remote $AUR_REMOTE${RESET}\n"
         fi
 
         cd ..

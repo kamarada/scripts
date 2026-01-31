@@ -1,110 +1,137 @@
-{
-    "archlinux-java-run": {
+[
+    {
+        "folder": "archlinux-java-run",
         "aur": "https://aur.archlinux.org/archlinux-java-run.git",
         "kamarada": "git@github.com:kamarada/archlinux-java-run.git"
     },
-    "ca-certificates-icp_br": {
+    {
+        "folder": "ca-certificates-icp_br",
         "aur": "https://aur.archlinux.org/ca-certificates-icp_br.git",
         "kamarada": "git@github.com:kamarada/ca-certificates-icp_br.git"
     },
-    "calamares-kamarada": {
+    {
+        "folder": "calamares-kamarada",
         "manjaro": "https://gitlab.manjaro.org/packages/extra/calamares.git",
         "kamarada": "git@github.com:kamarada/calamares-kamarada.git"
     },
-    "calamares-src": {
+    {
+        "folder": "calamares-src",
         "manjaro": "https://gitlab.manjaro.org/applications/calamares.git",
         "kamarada": "git@github.com:kamarada/calamares-src.git"
     },
-    "globalprotect-openconnect": {
+    {
+        "folder": "globalprotect-openconnect",
         "archlinux": "https://gitlab.archlinux.org/archlinux/packaging/packages/globalprotect-openconnect.git",
         "kamarada": "git@github.com:kamarada/globalprotect-openconnect.git"
     },
-    "gnome-kiosk": {
+    {
+        "folder": "gnome-kiosk",
         "aur": "https://aur.archlinux.org/gnome-kiosk.git",
         "kamarada": "git@github.com:kamarada/gnome-kiosk.git"
     },
-    "gnome-shell-extension-lockkeys": {
+    {
+        "folder": "gnome-shell-extension-lockkeys",
         "aur": "https://aur.archlinux.org/gnome-shell-extension-lockkeys.git",
         "kamarada": "git@github.com:kamarada/gnome-shell-extension-lockkeys.git"
     },
-    "grub-theme-kamarada": {
+    {
+        "folder": "grub-theme-kamarada",
         "manjaro": "https://gitlab.manjaro.org/packages/extra/grub-theme-live.git",
         "kamarada": "git@github.com:kamarada/grub-theme-kamarada.git"
     },
-    "grub-theme-kamarada-src": {
+    {
+        "folder": "grub-theme-kamarada-src",
         "manjaro": "https://gitlab.manjaro.org/artwork/branding/grub-theme.git",
         "kamarada": "git@github.com:kamarada/grub-theme-kamarada-src.git"
     },
-    "hfsprogs": {
+    {
+        "folder": "hfsprogs",
         "aur": "https://aur.archlinux.org/hfsprogs.git",
         "kamarada": "git@github.com:kamarada/hfsprogs.git"
     },
-    "hfsutils": {
+    {
+        "folder": "hfsutils",
         "aur": "https://aur.archlinux.org/hfsutils.git",
         "kamarada": "git@github.com:kamarada/hfsutils.git"
     },
-    "icoextract": {
+    {
+        "folder": "icoextract",
         "aur": "https://aur.archlinux.org/icoextract.git",
         "kamarada": "git@github.com:kamarada/icoextract.git"
     },
-    "joe": {
+    {
+        "folder": "joe",
         "aur": "https://aur.archlinux.org/joe.git",
         "kamarada": "git@github.com:kamarada/joe.git"
     },
-    "kamarada-gnome-settings": {
+    {
+        "folder": "kamarada-gnome-settings",
         "manjaro": "https://gitlab.manjaro.org/packages/extra/manjaro-gnome-settings.git",
         "kamarada": "git@github.com:kamarada/kamarada-gnome-settings.git"
     },
-    "kamarada-gnome-settings-src": {
+    {
+        "folder": "kamarada-gnome-settings-src",
         "manjaro": "https://gitlab.manjaro.org/profiles-and-settings/manjaro-gnome-settings.git",
         "kamarada": "git@github.com:kamarada/kamarada-gnome-settings-src.git"
     },
-    "kamarada-live": {
+    {
+        "folder": "kamarada-live",
         "manjaro": "https://gitlab.manjaro.org/packages/extra/manjaro-live.git",
         "kamarada": "git@github.com:kamarada/kamarada-live.git"
     },
-    "libaal": {
+    {
+        "folder": "libaal",
         "aur": "https://aur.archlinux.org/libaal.git",
         "kamarada": "git@github.com:kamarada/libaal.git"
     },
-    "liblinphone": {
+    {
+        "folder": "liblinphone",
         "aur": "https://aur.archlinux.org/liblinphone.git",
         "kamarada": "git@github.com:kamarada/liblinphone.git"
     },
-    "linphone-desktop": {
+    {
+        "folder": "linphone-desktop",
         "aur": "https://aur.archlinux.org/linphone-desktop.git",
         "kamarada": "git@github.com:kamarada/linphone-desktop.git"
     },
-    "manjaro-tools-livecd": {
+    {
+        "folder": "manjaro-tools-livecd",
         "manjaro": "https://gitlab.manjaro.org/tools/development-tools/manjaro-tools-livecd.git",
         "kamarada": "git@github.com:kamarada/manjaro-tools-livecd.git"
     },
-    "orchis-theme-git": {
+    {
+        "folder": "orchis-theme-git",
         "aur": "https://aur.archlinux.org/orchis-theme-git.git",
         "kamarada": "git@github.com:kamarada/orchis-theme-git.git"
     },
-    "paper-icon-theme": {
+    {
+        "folder": "paper-icon-theme",
         "aur": "https://aur.archlinux.org/paper-icon-theme.git",
         "kamarada": "git@github.com:kamarada/paper-icon-theme.git"
     },
-    "papirus-icon-theme-kamarada": {
+    {
+        "folder": "papirus-icon-theme-kamarada",
         "archlinux": "https://gitlab.archlinux.org/archlinux/packaging/packages/papirus-icon-theme.git",
         "kamarada": "git@github.com:kamarada/papirus-icon-theme-kamarada.git"
     },
-    "pdfsam": {
+    {
+        "folder": "pdfsam",
         "aur": "https://aur.archlinux.org/pdfsam.git",
         "kamarada": "git@github.com:kamarada/pdfsam.git"
     },
-    "plymouth-theme-kamarada": {
+    {
+        "folder": "plymouth-theme-kamarada",
         "manjaro": "https://gitlab.manjaro.org/packages/extra/plymouth-theme-manjaro.git",
         "kamarada": "git@github.com:kamarada/plymouth-theme-kamarada.git"
     },
-    "reiser4progs": {
+    {
+        "folder": "reiser4progs",
         "aur": "https://aur.archlinux.org/reiser4progs.git",
         "kamarada": "git@github.com:kamarada/reiser4progs.git"
     },
-    "reiserfsprogs": {
+    {
+        "folder": "reiserfsprogs",
         "aur": "https://aur.archlinux.org/reiserfsprogs.git",
         "kamarada": "git@github.com:kamarada/reiserfsprogs.git"
     }
-}
+]

@@ -33,7 +33,8 @@ git fetch manjaro
 echo
 echo 'Finished! Remember to add to repos-config.json:'
 echo ''
-echo "    \"$REPO_NAME\": {"
+echo "    {"
+echo "        \"folder\": \"$REPO_NAME\","
 echo "        \"manjaro\": \"$REMOTE_UPSTREAM\","
 echo "        \"kamarada\": \"$REMOTE_FORK\""
 echo '    },'
