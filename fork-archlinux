@@ -1,17 +1,20 @@
 #!/bin/bash
-# This script forks an AUR package to a Kamarada (GitHub) repo
+# This script forks an Arch Linux repo to a Kamarada (GitHub) repo
+
+# Example:
+# fork-archlinux https://gitlab.archlinux.org/archlinux/packaging/packages/papirus-icon-theme.git papirus-icon-theme-kamarada
 
 # Create an empty GitHub repo before running this script:
 # https://github.com/organizations/kamarada/repositories/new
 
-REPO_NAME=$1
-REMOTE_UPSTREAM="https://aur.archlinux.org/$REPO_NAME.git"
+REMOTE_UPSTREAM=$1
+REPO_NAME=$2
 REMOTE_FORK="git@github.com:kamarada/$REPO_NAME.git"
 
 git clone "$REMOTE_UPSTREAM" "$REPO_NAME"
 cd "$REPO_NAME"
 
-git remote rename origin aur
+git remote rename origin archlinux
 git remote add origin "$REMOTE_FORK"
 
 git branch -m stable
@@ -19,20 +22,20 @@ git branch --unset-upstream
 git push origin -u stable
 # Let's create the stable branch first so it becomes the default branch
 
-git checkout -b aur
-git push origin -u aur
+git checkout -b archlinux
+git push origin -u archlinux
 
 git checkout -b testing
 git push origin -u testing
 
-git fetch aur
+git fetch archlinux
 
 echo
 echo 'Finished! Remember to add to repos-config.json:'
 echo ''
 echo "    {"
 echo "        \"folder\": \"$REPO_NAME\","
-echo "        \"aur\": \"$REMOTE_UPSTREAM\","
+echo "        \"archlinux\": \"$REMOTE_UPSTREAM\","
 echo "        \"kamarada\": \"$REMOTE_FORK\""
 echo '    },'
 echo

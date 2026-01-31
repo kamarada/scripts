@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script forks a Manjaro repo to a Kamarada repo
+# This script forks a Manjaro repo to a Kamarada (GitHub) repo
 
 # Example:
 # fork-manjaro https://gitlab.manjaro.org/plymouth-themes/plymouth-manjaro.git plymouth-kamarada
