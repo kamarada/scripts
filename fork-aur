@@ -1,8 +1,14 @@
 #!/bin/bash
 # This script forks an AUR package to a Kamarada (GitHub) repo
 
+# Example:
+# fork-aur paper-icon-theme
+
 # Create an empty GitHub repo before running this script:
 # https://github.com/organizations/kamarada/repositories/new
+
+REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
+REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
 
 REPO_NAME=$1
 REMOTE_UPSTREAM="https://aur.archlinux.org/$REPO_NAME.git"
@@ -27,12 +33,21 @@ git push origin -u testing
 
 git fetch aur
 
-echo
-echo 'Finished! Remember to add to repos-config.json:'
-echo ''
-echo "    {"
-echo "        \"folder\": \"$REPO_NAME\","
-echo "        \"aur\": \"$REMOTE_UPSTREAM\","
-echo "        \"kamarada\": \"$REMOTE_FORK\""
-echo '    },'
-echo
+# Add to repos-config.json
+
+NEW_REPO_CONFIG=$(cat <<EOF
+{
+    "folder": "$REPO_NAME",
+    "aur": "$REMOTE_UPSTREAM",
+    "kamarada": "$REMOTE_FORK"
+}
+EOF
+)
+
+TMP_FILE=$(mktemp)
+
+jq --argjson obj "$NEW_REPO_CONFIG" '
+  . + [$obj] | sort_by(.folder)
+' "$REPOS_CONFIG" > "$TMP_FILE"
+
+mv "$TMP_FILE" "$REPOS_CONFIG"
