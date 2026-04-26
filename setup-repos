@@ -1,9 +1,11 @@
 #!/bin/bash
 # This script replicates the Linux Kamarada repository structure
 
-REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
-REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
-CHECKOUT_BRANCH="testing"
+#REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
+REPOS_DIR="/home/vinicius/dev/projects/git/teste"
+#REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
+REPOS_CONFIG="/home/vinicius/dev/projects/git/kamarada/scripts/repos-config.json"
+KAMARADA_BRANCH="testing"
 
 # Define color variables (using \033 for maximum portability)
 GREEN='\033[32m'
@@ -24,23 +26,17 @@ do
         printf "${GREEN}$REPO_NAME: directory exists, skipping...${RESET}\n"
     else
         printf "${GREEN}$REPO_NAME: directory does not exist, fetching...${RESET}\n"
-        KAMARADA_REMOTE=$(call_jq -r ".[$r].kamarada")
-        git clone "$KAMARADA_REMOTE" "$REPO_NAME"
+        KAMARADA_REMOTE_URL=$(call_jq -r ".[$r].kamarada_url")
+        git clone "$KAMARADA_REMOTE_URL" "$REPO_NAME"
         cd "$REPO_NAME"
-        git checkout "$CHECKOUT_BRANCH"
+        git checkout "$KAMARADA_BRANCH"
 
         # Set up upstream remote
-        MANJARO_REMOTE=$(call_jq -r ".[$r].manjaro")
-        AUR_REMOTE=$(call_jq -r ".[$r].aur")
-        if [[ "$MANJARO_REMOTE" != "null" ]]; then
-            git remote add manjaro "$MANJARO_REMOTE"
-            git fetch manjaro
-            printf "${GREEN}$REPO_NAME: set up with Manjaro remote $MANJARO_REMOTE${RESET}\n"
-        elif [[ "$AUR_REMOTE" != "null" ]]; then
-            git remote add aur "$AUR_REMOTE"
-            git fetch aur
-            printf "${GREEN}$REPO_NAME: set up with AUR remote $AUR_REMOTE${RESET}\n"
-        fi
+        UPSTREAM=$(call_jq -r ".[$r].upstream")
+        UPSTREAM_REMOTE_URL=$(call_jq -r ".[$r].upstream_url")
+        git remote add "$UPSTREAM" "$UPSTREAM_REMOTE_URL"
+        git fetch "$UPSTREAM"
+        printf "${GREEN}$REPO_NAME: set up with $UPSTREAM remote $UPSTREAM_REMOTE_URL${RESET}\n"
 
         cd ..
     fi

@@ -11,14 +11,14 @@ REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
 REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
 
 REPO_NAME=$1
-REMOTE_UPSTREAM="https://aur.archlinux.org/$REPO_NAME.git"
-REMOTE_FORK="git@github.com:kamarada/$REPO_NAME.git"
+UPSTREAM_REMOTE_URL="https://aur.archlinux.org/$REPO_NAME.git"
+KAMARADA_REMOTE_URL="git@github.com:kamarada/$REPO_NAME.git"
 
-git clone "$REMOTE_UPSTREAM" "$REPO_NAME"
+git clone "$UPSTREAM_REMOTE_URL" "$REPO_NAME"
 cd "$REPO_NAME"
 
 git remote rename origin aur
-git remote add origin "$REMOTE_FORK"
+git remote add origin "$KAMARADA_REMOTE_URL"
 
 git branch -m stable
 git branch --unset-upstream
@@ -38,8 +38,9 @@ git fetch aur
 NEW_REPO_CONFIG=$(cat <<EOF
 {
     "folder": "$REPO_NAME",
-    "aur": "$REMOTE_UPSTREAM",
-    "kamarada": "$REMOTE_FORK"
+    "upstream": "aur",
+    "upstream_url": "$UPSTREAM_REMOTE_URL",
+    "kamarada_url": "$KAMARADA_REMOTE_URL"
 }
 EOF
 )
