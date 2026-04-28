@@ -1,0 +1,48 @@
+#!/bin/bash
+# This script compares Kamarada repos with upstream repos and tell which ones need to be updated
+
+set -euo pipefail
+
+REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
+REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
+
+# Define color variables (using \033 for maximum portability)
+GREEN='\033[32m'
+YELLOW='\033[0;33m'
+RESET='\033[0m'
+
+call_jq() {
+    jq -r "$@" $REPOS_CONFIG
+}
+
+cd "$REPOS_DIR"
+
+NUMBER_OF_REPOS=$(call_jq '. | length')
+
+for ((r = 0; r < NUMBER_OF_REPOS; r++ ))
+do
+    REPO_NAME=$(call_jq -r ".[$r].folder")
+    UPSTREAM=$(call_jq -r ".[$r].upstream")
+    UPSTREAM_BRANCH=$(call_jq -r ".[$r].upstream_branch")
+
+    KAMARADA_REMOTE_BRANCH="origin/${UPSTREAM}"
+    UPSTREAM_REMOTE_BRANCH="${UPSTREAM}/${UPSTREAM_BRANCH}"
+
+    cd "$REPO_NAME"
+
+    git fetch origin
+    git fetch "$UPSTREAM"
+
+    # Get the commit hashes
+    KAMARADA_HASH=$(git rev-parse "$KAMARADA_REMOTE_BRANCH")
+    UPSTREAM_HASH=$(git rev-parse "$UPSTREAM_REMOTE_BRANCH")
+
+    # Compare and alert if different
+    if [[ "$KAMARADA_HASH" != "$UPSTREAM_HASH" ]]; then
+        printf "${YELLOW}⚠️ $REPO_NAME: needs to be updated${RESET}\n"
+    else
+        printf "${GREEN}✅ $REPO_NAME: in sync with upstream${RESET}\n"
+    fi
+
+    cd ..
+done
