@@ -1,0 +1,36 @@
+#!/bin/bash
+# This script runs a command in every Kamarada repo
+
+set -euo pipefail
+
+REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
+REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
+
+# Define color variables (using \033 for maximum portability)
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+RESET='\033[0m'
+
+call_jq() {
+    jq -r "$@" $REPOS_CONFIG
+}
+
+cd "$REPOS_DIR"
+
+NUMBER_OF_REPOS=$(call_jq '. | length')
+
+for ((r = 0; r < NUMBER_OF_REPOS; r++ ))
+do
+    REPO_NAME=$(call_jq -r ".[$r].folder")
+
+    printf "${YELLOW}$REPO_NAME${RESET}\n"
+    cd "$REPO_NAME"
+
+    if ! "$@"; then
+        printf "${RED}Command failed in %s${RESET}\n" "$REPO_NAME" >&2
+    fi
+
+    printf "\n"
+
+    cd ..
+done
