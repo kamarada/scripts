@@ -1,0 +1,67 @@
+name: Check Kamarada repos for upstream updates
+
+# Runs setup-repos and check-updates once a day inside a Manjaro container
+# and e-mails the combined output.
+#
+# Required repo secrets:
+#   KAMARADA_GH_TOKEN - GitHub token (classic PAT with "repo" scope, or a
+#                        fine-grained token with read access to the kamarada
+#                        org repos) used instead of SSH to clone/fetch the
+#                        git@github.com:kamarada/*.git repos listed in
+#                        repos-config.json.
+#   MAIL_SERVER        - SMTP server address (e.g. smtp.gmail.com)
+#   MAIL_PORT          - SMTP server port (e.g. 465)
+#   MAIL_USERNAME      - SMTP username
+#   MAIL_PASSWORD      - SMTP password (e.g. a Gmail App Password)
+#   MAIL_TO            - Recipient e-mail address
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  check-updates:
+    runs-on: ubuntu-latest
+    container:
+      image: manjarolinux/base:latest
+    steps:
+      - name: Install dependencies
+        run: pacman -Syu --noconfirm --needed git jq
+
+      - name: Checkout scripts repo
+        uses: actions/checkout@v4
+
+      - name: Use HTTPS with a token instead of SSH for github.com
+        env:
+          GH_TOKEN: ${{ secrets.KAMARADA_GH_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "git@github.com:"
+          git config --global --add safe.directory '*'
+
+      - name: Run setup-repos and check-updates
+        env:
+          REPOS_DIR: ${{ runner.temp }}/kamarada-repos
+          REPOS_CONFIG: ${{ github.workspace }}/repos-config.json
+        run: |
+          mkdir -p "$REPOS_DIR"
+          {
+            echo "## setup-repos"
+            ./setup-repos
+            echo
+            echo "## check-updates"
+            ./check-updates
+          } 2>&1 | sed -E 's/\x1B\[[0-9;]*[a-zA-Z]//g' | tee output.txt
+
+      - name: E-mail the output
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Kamarada repos update check (run #${{ github.run_number }})"
+          to: ${{ secrets.MAIL_TO }}
+          from: Kamarada CI
+          body: file://output.txt

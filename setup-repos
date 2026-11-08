@@ -2,10 +2,10 @@
 # This script replicates the Linux Kamarada repository structure
 
 #REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
-REPOS_DIR="/home/vinicius/dev/projects/git/teste"
+REPOS_DIR="${REPOS_DIR:-/home/vinicius/dev/projects/git/teste}"
 #REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
-REPOS_CONFIG="/home/vinicius/dev/projects/git/kamarada/scripts/repos-config.json"
-KAMARADA_BRANCH="testing"
+REPOS_CONFIG="${REPOS_CONFIG:-/home/vinicius/dev/projects/git/kamarada/scripts/repos-config.json}"
+KAMARADA_BRANCH="${KAMARADA_BRANCH:-testing}"
 
 # Define color variables (using \033 for maximum portability)
 GREEN='\033[32m'

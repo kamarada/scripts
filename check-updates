@@ -3,8 +3,8 @@
 
 set -euo pipefail
 
-REPOS_DIR="/home/vinicius/dev/projects/git/kamarada"
-REPOS_CONFIG="$REPOS_DIR/scripts/repos-config.json"
+REPOS_DIR="${REPOS_DIR:-/home/vinicius/dev/projects/git/kamarada}"
+REPOS_CONFIG="${REPOS_CONFIG:-$REPOS_DIR/scripts/repos-config.json}"
 
 # Define color variables (using \033 for maximum portability)
 GREEN='\033[32m'
