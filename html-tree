@@ -3,6 +3,10 @@
 # current folder and all of its subfolders, recursively. Inspired by
 # https://download.opensuse.org/tumbleweed/repo/oss/
 # Any existing index.html is overwritten.
+#
+# To test the produced HTML files, serve the current directory with:
+#   docker run --rm -it -p 8080:80 -v "$(pwd):/usr/share/nginx/html:ro" nginx:alpine
+# then open http://localhost:8080
 
 set -euo pipefail
 
